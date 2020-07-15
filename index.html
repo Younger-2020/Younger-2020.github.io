@@ -152,6 +152,183 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-打印杨辉三角与组合数新算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%8E%E7%BB%84%E5%90%88%E6%95%B0%E6%96%B0%E7%AE%97%E6%B3%95/">打印杨辉三角与组合数新算法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%8E%E7%BB%84%E5%90%88%E6%95%B0%E6%96%B0%E7%AE%97%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-07-15T03:44:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>利用上一篇中写到的组合数公式可以打印出杨辉三角,但是效率却极其低下</p>
+<h3 id="旧算法-利用组合数公式"><a href="#旧算法-利用组合数公式" class="headerlink" title="旧算法(利用组合数公式)"></a>旧算法(利用组合数公式)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> start = System.currentTimeMillis();</span><br><span class="line">        yanghui(<span class="number">30</span>);</span><br><span class="line">        <span class="keyword">long</span> end = System.currentTimeMillis();</span><br><span class="line">        sop(<span class="string">"使用时间:"</span> + (end - start));</span><br><span class="line">    &#125;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">yanghui</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            printfor(yanghui_ceng(i));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span>[] yanghui_ceng(<span class="keyword">int</span> n) &#123;</span><br><span class="line">    <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            arr[i] = C_plus2(n, i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">C_plus2</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">0</span> || k == n) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k &gt; n) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> n;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k == <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> (n * (n - <span class="number">1</span>)) / <span class="number">2</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k == <span class="number">3</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> (n * (n - <span class="number">1</span>)*(n-<span class="number">2</span>)) / <span class="number">6</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (k &gt; n / <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> C_plus2(n, n - k);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> C_plus2(n - <span class="number">1</span>, k - <span class="number">1</span>) + C_plus2(n - <span class="number">1</span>, k);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>打印30层杨辉三角的时间为78ms左右,但缺点明显:打印34层时出现负数,最终停在37层且散热风扇狂转,无法正确得出更高层.</p>
+<h3 id="新算法"><a href="#新算法" class="headerlink" title="新算法"></a>新算法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> start = System.currentTimeMillis();</span><br><span class="line">        yanghui(<span class="number">60</span>);</span><br><span class="line">        <span class="keyword">long</span> end = System.currentTimeMillis();</span><br><span class="line">        sop(<span class="string">"使用时间:"</span> + (end - start));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printfor</span><span class="params">(<span class="keyword">long</span>[] target)</span> </span>&#123;</span><br><span class="line">        String res = Arrays.toString(target);</span><br><span class="line">        res = res.replaceAll(<span class="string">"[\\[\\]]"</span>, <span class="string">""</span>);</span><br><span class="line">        res = res.replaceAll(<span class="string">","</span>, <span class="string">" "</span>);</span><br><span class="line">        sop(res);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">long</span>[] change(<span class="keyword">long</span>[] t) &#123;</span><br><span class="line">        <span class="keyword">long</span>[] new_t = <span class="keyword">new</span> <span class="keyword">long</span>[t.length + <span class="number">1</span>];</span><br><span class="line">        new_t[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; new_t.length; i++) &#123;</span><br><span class="line">            new_t[i] = t[i - <span class="number">1</span>] + (i == t.length ? <span class="number">0</span> : t[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> new_t;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">yanghui</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span>[] a = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</span><br><span class="line">            printfor(a);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (n &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            sop(<span class="string">"输入的值不能为负数!"</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            printfor(a);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">                printfor(a = change(a));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>该算法的核心就是这个<code>change(long [] t)</code>函数,该函数可以根据上一层来推出下一层,理论上只要数字不超过long的范围就可以一直正确打印.而且打印60层只用了<code>15ms</code>!!!!!</p>
+<h3 id="思考-是否可以使用这个change函数间接得到组合数"><a href="#思考-是否可以使用这个change函数间接得到组合数" class="headerlink" title="思考:是否可以使用这个change函数间接得到组合数"></a>思考:是否可以使用这个change函数间接得到组合数</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> 真<span class="title">_</span>组合数公式 </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> start = System.currentTimeMillis();</span><br><span class="line">        sop(C(<span class="number">60</span>, <span class="number">30</span>));</span><br><span class="line">        <span class="keyword">long</span> end = System.currentTimeMillis();</span><br><span class="line">        sop(<span class="string">"使用时间:"</span> + (end - start));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">long</span> <span class="title">C</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> change_plus(n)[k];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">long</span>[] change_plus(<span class="keyword">int</span> n) &#123;</span><br><span class="line">        <span class="keyword">long</span>[] t = <span class="keyword">new</span> <span class="keyword">long</span>[]&#123;<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> t;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">                <span class="keyword">long</span>[] new_t = <span class="keyword">new</span> <span class="keyword">long</span>[t.length + <span class="number">1</span>];</span><br><span class="line">                new_t[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; new_t.length; j++) &#123;</span><br><span class="line">                    new_t[j] = t[j - <span class="number">1</span>] + (j == t.length ? <span class="number">0</span> : t[j]);</span><br><span class="line">                &#125;</span><br><span class="line">                t = new_t;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> t;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>change_plus(int n)</code>函数的作用是返回第n层的杨辉三角数组,只要使用了这个数组就可以很轻松地获得组合数,因为第n层数组的k号下标的数字就是<code>C(n,k)</code></p>
+<div align="center"><img src="http://m.qpic.cn/psc?/V1298dmE2zYGJO/u0qUMsilGdkhXscKj.lHLnxz4p0E97AtSN4kSGdYXTuc*mJJdwrcbRob5oFy.6lpmbXMudFH41RzJPHeLP6qsg!!/b&amp;bo=NQGNAAAAAAADB5s!&amp;rf=viewer_4" style="zoom:150%;" /></div>
+
+<p>骄傲,虽然还可以通过组合数组的对称性继续优化,但是写了一上午的代码,好累啊</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%8E%E7%BB%84%E5%90%88%E6%95%B0%E6%96%B0%E7%AE%97%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-打印杨辉三角中组合数公式的思考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%AD%E7%BB%84%E5%90%88%E6%95%B0%E5%85%AC%E5%BC%8F%E7%9A%84%E6%80%9D%E8%80%83/">打印杨辉三角中组合数公式的思考</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%AD%E7%BB%84%E5%90%88%E6%95%B0%E5%85%AC%E5%BC%8F%E7%9A%84%E6%80%9D%E8%80%83/" class="archive-article-date">
+  	<time datetime="2020-07-15T02:08:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在打印杨辉三角中又一种思路就是通过组合数来得出每行的数列</p>
+<h3 id="思路1：直接使用公式"><a href="#思路1：直接使用公式" class="headerlink" title="思路1：直接使用公式"></a>思路1：直接使用公式</h3><div align="center"><img src="http://m.qpic.cn/psc?/V1298dmE2zYGJO/u0qUMsilGdkhXscKj.lHLmFSfV6pYNzQaA.zZEr6XURaGZxrX1yppyLCEFTMylJ4jc.rU4yqiOKzqYJGrvJDOw!!/b&amp;bo=wQAtAAAAAAADB84!&amp;rf=viewer_4" style="zoom: 150%;" /></div>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">C</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> A(m, n) / A(n, n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">A</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> res = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++, m--) &#123;</span><br><span class="line">                res *= m;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>缺点：<code>A(m,n)</code>过大,溢出,根本无法计算像<code>C(30,15)</code>这样的大数</p>
+<h3 id="思路2-使用递归"><a href="#思路2-使用递归" class="headerlink" title="思路2:使用递归"></a>思路2:使用递归</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">C_plus</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> (C_plus(n - <span class="number">1</span>, k - <span class="number">1</span>) + (k &gt; n - <span class="number">1</span> ? <span class="number">0</span> : C_plus(n - <span class="number">1</span>, k)));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>虽然可以计算出像<code>C(30,15)</code>这样的大数,但是所用时间在500ms左右,得想办法提高效率</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">C_plus2</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">0</span> || k == n) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k &gt; n) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> n;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k == <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> (n * (n - <span class="number">1</span>)) / <span class="number">2</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (k == <span class="number">3</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> (n * (n - <span class="number">1</span>)*(n-<span class="number">2</span>)) / <span class="number">6</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (k &gt; n / <span class="number">2</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> C_plus2(n, n - k);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> C_plus2(n - <span class="number">1</span>, k - <span class="number">1</span>) + C_plus2(n - <span class="number">1</span>, k);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>经过验证:当没有<code>k==1</code>等判断条件时计算<code>C(30,15)</code>的时间在375ms左右;添加<code>k==1</code>条件后时间在125ms左右;当继续添加<code>k==2</code>条件后时间变为32<del>47ms;当添加<code>k==3</code>后时间变为0</del>16ms左右,可见递归的时间开销确实很大,添加一些”常用”的出口条件就可以显著提高效率.</p>
+<p>这个算法的极限停留在<code>C(38,19)</code>(不知道可不可以通过调大虚拟机的内存来防止堆内存溢出?)当把<code>C_plus2</code>中的<code>int</code>改为<code>long</code>后可以计算<code>C(40,20)</code>,不过要用12s.验证结果时看到了一个网站</p>
+<p><a href="https://tool.520101.com/calculator/zuhepailie/" target="_blank" rel="noopener">https://tool.520101.com/calculator/zuhepailie/</a></p>
+<p>看了一下源码,发现虽然计算思路非常朴素,但是速度超快.果然还是<code>python</code>和<code>JavaScript</code>这样的语言计算大数有优势.</p>
+<p>大佬计算组合数的方式:<a href="https://blog.csdn.net/haiyoushui123456/article/details/84338494" target="_blank" rel="noopener">Java计算组合数以及生成组合排列</a>(酸)</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%AD%E7%BB%84%E5%90%88%E6%95%B0%E5%85%AC%E5%BC%8F%E7%9A%84%E6%80%9D%E8%80%83/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-用Python创建带有图片的二维码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -591,6 +768,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">小技术</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
               </li>
             
             <div class="clearfix"></div>
