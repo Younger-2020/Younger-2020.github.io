@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 算法 | ☆海洋の心★のblog</title>
+  <title>希尔排序与快排 | ☆海洋の心★のblog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="☆海洋の心★のblog">
-<meta property="og:url" content="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/index.html">
+  <meta name="description" content="直接插入排序参考:白话经典算法系列之二 直接插入排序的三种实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="希尔排序与快排">
+<meta property="og:url" content="http://yoursite.com/2020/08/05/%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E4%B8%8E%E5%BF%AB%E6%8E%92/index.html">
 <meta property="og:site_name" content="☆海洋の心★のblog">
+<meta property="og:description" content="直接插入排序参考:白话经典算法系列之二 直接插入排序的三种实现">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-05T08:14:44.000Z">
+<meta property="article:modified_time" content="2020-08-09T03:36:43.687Z">
 <meta property="article:author" content="☆海洋の心★">
+<meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="☆海洋の心★のblog" type="application/atom+xml">
@@ -150,36 +155,63 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-希尔排序与快排" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      希尔排序与快排
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/08/05/%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E4%B8%8E%E5%BF%AB%E6%8E%92/" class="archive-article-date">
+
+        
+        <a href="/2020/08/05/%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E4%B8%8E%E5%BF%AB%E6%8E%92/" class="archive-article-date">
   	<time datetime="2020-08-05T08:14:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-05</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/08/05/%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E4%B8%8E%E5%BF%AB%E6%8E%92/">希尔排序与快排</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h4><p>参考:<a href="https://blog.csdn.net/morewindows/article/details/6665714" target="_blank" rel="noopener">白话经典算法系列之二 直接插入排序的三种实现</a></p>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
+<p>要想学习希尔排序就要了解直接插入排序 . 直接插入排序被百度百科称为一种最简单的排序方法 , 它的思想就是将一条记录插入到已排好的有序表中 , 从而得到一个新的有序表 . </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printArr</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> <span class="built_in">size</span>)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="built_in">size</span>;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//确定待排序的数组 </span></span><br><span class="line">	<span class="keyword">int</span> a[]=&#123;<span class="number">98</span>,<span class="number">76</span>,<span class="number">109</span>,<span class="number">34</span>,<span class="number">67</span>,<span class="number">190</span>,<span class="number">80</span>,<span class="number">12</span>,<span class="number">14</span>,<span class="number">89</span>,<span class="number">1</span>,<span class="number">-23</span>,<span class="number">-32983</span>,<span class="number">-485</span>,<span class="number">274</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> len=<span class="keyword">sizeof</span>(a)/<span class="keyword">sizeof</span>(a[<span class="number">0</span>]);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;len;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(a[i]&lt;a[i<span class="number">-1</span>])&#123;</span><br><span class="line">			<span class="comment">//确定 a[i] 的位置 </span></span><br><span class="line">			<span class="keyword">int</span> index=<span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=i<span class="number">-1</span>;j&gt;=<span class="number">0</span>;j--)&#123;</span><br><span class="line">				<span class="keyword">if</span>(a[j]&lt;=a[i])&#123;</span><br><span class="line">					index=j+<span class="number">1</span>;</span><br><span class="line">					<span class="keyword">break</span>;			</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//确定位置后通过交换顺序对前 i 号元素进行排序</span></span><br><span class="line">			<span class="comment">/* 共需要进行 i-index 次交换 */</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;i-index;k++)&#123;</span><br><span class="line">				<span class="keyword">int</span> temp=a[index+k];</span><br><span class="line">				a[index+k]=a[i];</span><br><span class="line">				a[i]=temp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	printArr(a,len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然而 , 这样写代码较为繁琐 , 可以将<code>if</code>判断加到<code>for</code>循环中 , 实现边查找 , 边交换</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printArr</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> <span class="built_in">size</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="built_in">size</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">//确定待排序的数组</span></span><br><span class="line">	<span class="keyword">int</span> a[]= &#123;<span class="number">98</span>,<span class="number">76</span>,<span class="number">109</span>,<span class="number">34</span>,<span class="number">67</span>,<span class="number">190</span>,<span class="number">80</span>,<span class="number">12</span>,<span class="number">14</span>,<span class="number">89</span>,<span class="number">1</span>,<span class="number">-23</span>,<span class="number">-32983</span>,<span class="number">-485</span>,<span class="number">274</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> len=<span class="keyword">sizeof</span>(a)/<span class="keyword">sizeof</span>(a[<span class="number">0</span>]);</span><br><span class="line">	<span class="comment">//使用直接插入法进行排序</span></span><br><span class="line">	<span class="keyword">int</span> temp;</span><br><span class="line">	<span class="comment">/* 使用新算法,边查找边交换 */</span> </span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;len; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=i; a[j]&lt;a[j<span class="number">-1</span>]&amp;&amp;j&gt;=<span class="number">0</span>; j--) &#123;</span><br><span class="line">			temp=a[j];</span><br><span class="line">			a[j]=a[j<span class="number">-1</span>];</span><br><span class="line">			a[j<span class="number">-1</span>]=temp;</span><br><span class="line">		&#125;</span><br><span class="line">	printArr(a,len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>新算法虽然代码较少 , 但是是通过定义中间变量并交换的方式来实现排序 , 在效率上可能不及参考链接中的<code>Insertsort2</code>,因为<code>Insertsort2</code>采用的是移动而非交换.</li>
+<li>这样代码量就减少了很多 . 从形式上看直接插入排序和选择,冒泡排序的算法差不多 . 这种写法的思路和冒泡有点相似 . 不过个人感觉还是冒泡和选择的原理比较好理解. </li>
+</ul>
+</blockquote>
+<h4 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h4><p>参考:<a href="https://blog.csdn.net/MoreWindows/article/details/6668714" target="_blank" rel="noopener">白话经典算法系列之三 希尔排序的实现</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printArr</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> <span class="built_in">size</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="built_in">size</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">//确定待排序的数组</span></span><br><span class="line">	<span class="keyword">int</span> a[] = &#123;<span class="number">49</span>, <span class="number">38</span>, <span class="number">65</span>, <span class="number">97</span>, <span class="number">26</span>, <span class="number">13</span>, <span class="number">27</span>, <span class="number">49</span>, <span class="number">55</span>, <span class="number">4</span>,<span class="number">-23555555</span>,<span class="number">34</span>,<span class="number">54</span>,<span class="number">6</span>,<span class="number">-4</span>,<span class="number">6</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> len=<span class="keyword">sizeof</span>(a)/<span class="keyword">sizeof</span>(a[<span class="number">0</span>]);</span><br><span class="line">	<span class="comment">//使用希尔排序</span></span><br><span class="line">	<span class="keyword">int</span> temp;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> gap=len/<span class="number">2</span>; gap&gt;<span class="number">0</span>; gap/=<span class="number">2</span>) &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;gap; i++) &#123;</span><br><span class="line">			<span class="comment">/* 对 gap 组中的第 i 组进行排序(实际上就是用直接插入排序) */</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=i+gap;j&lt;len;j+=gap) &#123;</span><br><span class="line">				<span class="keyword">if</span>(a[j]&lt;a[j-gap])&#123;</span><br><span class="line">					<span class="comment">/* 确定 a[j]的位置 */</span></span><br><span class="line">					<span class="keyword">int</span> index=i;</span><br><span class="line">					<span class="keyword">for</span>(<span class="keyword">int</span> k=j-gap;k&gt;=<span class="number">0</span>;k-=gap)&#123;</span><br><span class="line">						<span class="keyword">if</span>(a[k]&lt;=a[j])&#123;</span><br><span class="line">							index=k+gap;</span><br><span class="line">							<span class="keyword">break</span>;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="comment">/* 移动元素 */</span></span><br><span class="line">					<span class="keyword">int</span> temp=a[j];</span><br><span class="line">					<span class="keyword">for</span>(<span class="keyword">int</span> k=j;k&gt;index;k-=gap)&#123;</span><br><span class="line">						a[k]=a[k-gap];</span><br><span class="line">					&#125;</span><br><span class="line">					a[index]=temp;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	printArr(a,len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但实际上大可不必确定<code>a[j]</code>的位置 , 有更为简单的方式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printArr</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> <span class="built_in">size</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="built_in">size</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">//确定待排序的数组</span></span><br><span class="line">	<span class="keyword">int</span> a[] = &#123;<span class="number">49</span>, <span class="number">38</span>, <span class="number">65</span>, <span class="number">97</span>, <span class="number">26</span>, <span class="number">13</span>, <span class="number">27</span>, <span class="number">49</span>, <span class="number">55</span>, <span class="number">4</span>,<span class="number">-23555555</span>,<span class="number">34</span>,<span class="number">54</span>,<span class="number">6</span>,<span class="number">-4</span>,<span class="number">6</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> len=<span class="keyword">sizeof</span>(a)/<span class="keyword">sizeof</span>(a[<span class="number">0</span>]);</span><br><span class="line">	<span class="comment">//使用希尔排序</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> gap=len/<span class="number">2</span>; gap&gt;<span class="number">0</span>; gap/=<span class="number">2</span>) &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;gap; i++) &#123;</span><br><span class="line">			<span class="comment">/* 对 gap 组中的第 i 组进行排序(实际上就是用直接插入排序) */</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=i+gap; j&lt;len; j+=gap) &#123;</span><br><span class="line">				<span class="keyword">if</span>(a[j]&lt;a[j-gap]) &#123;</span><br><span class="line">					<span class="keyword">int</span> temp=a[j] ;</span><br><span class="line">					<span class="keyword">int</span> k;</span><br><span class="line">					<span class="keyword">for</span>(k=j-gap; a[k]&gt;temp&amp;&amp;k&gt;=<span class="number">0</span>; k-=gap) &#123;</span><br><span class="line">						a[k+gap]=a[k];</span><br><span class="line">					&#125;</span><br><span class="line">					a[k+gap]=temp;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	printArr(a,len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用交换的思想可以使代码更加简洁</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printArr</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> <span class="built_in">size</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="built_in">size</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">//确定待排序的数组</span></span><br><span class="line">	<span class="keyword">int</span> a[] = &#123;<span class="number">49</span>, <span class="number">38</span>, <span class="number">65</span>, <span class="number">97</span>, <span class="number">26</span>, <span class="number">13</span>, <span class="number">27</span>, <span class="number">49</span>, <span class="number">55</span>, <span class="number">4</span>,<span class="number">-23555555</span>,<span class="number">34</span>,<span class="number">54</span>,<span class="number">6</span>,<span class="number">-4</span>,<span class="number">6</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> len=<span class="keyword">sizeof</span>(a)/<span class="keyword">sizeof</span>(a[<span class="number">0</span>]);</span><br><span class="line">	<span class="comment">//使用希尔排序</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> gap=len/<span class="number">2</span>; gap&gt;<span class="number">0</span>; gap/=<span class="number">2</span>)</span><br><span class="line">	<span class="comment">/* 令 i=gap 而不是0是为了使用改进版的直接插入排序的思想 */</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=gap; i&lt;len; i+=gap)</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j=i; a[j]&lt;a[j-gap]&amp;&amp;j&gt;<span class="number">0</span>; j-=gap) &#123;</span><br><span class="line">				<span class="keyword">int</span> temp=a[j];</span><br><span class="line">				a[j]=a[j-gap];</span><br><span class="line">				a[j-gap]=temp;</span><br><span class="line">			&#125;</span><br><span class="line">	printArr(a,len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><p>通俗理解快速排序的思想可以参考毕导的视屏:<a href="https://www.bilibili.com/video/BV1RT4y1j7pP" target="_blank" rel="noopener">【毕导】男同胞福音！如何解决尿尿时最尴尬的难题？</a></p>
+<p>基本的思路就是在数组中任选一个数 , 将比它大的数放在右 , 比它小的数放在左边 , 再分别对左边和右边的数进行同样的操作 , 等到这样的区域被划分得足够小的时候就可以使整个数组都有序.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; </span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">printArr</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> <span class="built_in">size</span>)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="built_in">size</span>;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,arr[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">qsort</span><span class="params">(<span class="keyword">int</span> *arr, <span class="keyword">int</span> left , <span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">	<span class="comment">//出口条件 </span></span><br><span class="line">	<span class="keyword">if</span>(left&gt;=right) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">int</span> key=arr[left];</span><br><span class="line">	<span class="keyword">int</span> i=left,j=right;</span><br><span class="line">	<span class="comment">//将比 key 大的集中到右边,比 key 小的集中到左边 </span></span><br><span class="line">	<span class="comment">/* 利用交换的方法实现,实在是妙! */</span></span><br><span class="line">	<span class="keyword">while</span>(i&lt;j)&#123;</span><br><span class="line">		<span class="keyword">while</span>(i&lt;j&amp;&amp;key&lt;=arr[j])&#123;</span><br><span class="line">			j--;</span><br><span class="line">		&#125;</span><br><span class="line">		arr[i]=arr[j];</span><br><span class="line">		<span class="keyword">while</span>(i&lt;j&amp;&amp;key&gt;=arr[i])&#123;</span><br><span class="line">			i++;</span><br><span class="line">		&#125;</span><br><span class="line">		arr[j]=arr[i];</span><br><span class="line">	&#125;</span><br><span class="line">		arr[i]=key;	<span class="comment">//由于此时 i=j 也可以写成 a[j]=key;</span></span><br><span class="line">	<span class="comment">//再分别将左边的和右边的进行排序 </span></span><br><span class="line">	qsort(arr,left,i<span class="number">-1</span>);</span><br><span class="line">	qsort(arr,i+<span class="number">1</span>,right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//确定待排序的数组 </span></span><br><span class="line">	<span class="keyword">int</span> arr[]=&#123;<span class="number">23</span>,<span class="number">4</span>,<span class="number">65</span>,<span class="number">76</span>,<span class="number">8</span>,<span class="number">43</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">82</span>,<span class="number">3</span>,<span class="number">5653</span>,<span class="number">23</span>,<span class="number">-4</span>,<span class="number">635</span>,<span class="number">765</span>,<span class="number">23</span>,<span class="number">45</span>,<span class="number">34</span>,<span class="number">-356</span>,<span class="number">36</span>&#125;;</span><br><span class="line">	<span class="comment">//进行快速排序</span></span><br><span class="line">	<span class="keyword">int</span> len=<span class="keyword">sizeof</span>(arr)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	qsort(arr,<span class="number">0</span>,len<span class="number">-1</span>);</span><br><span class="line">	printArr(arr,len);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>整个快速排序的核心就是怎么将比<code>key</code>大/小的数据集中到右/左边 , 以及递归的出口条件.</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,95 +223,64 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%8E%E7%BB%84%E5%90%88%E6%95%B0%E6%96%B0%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-07-15T03:44:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2020/08/18/%E9%A5%A5%E8%8D%92mod%E5%88%B6%E4%BD%9C-%E6%B7%BB%E5%8A%A0%E9%85%8D%E6%96%B9-%E5%88%B6%E4%BD%9C%E6%AD%A6%E5%99%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          饥荒mod制作(添加配方,制作武器)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/07/31/C%E8%AF%AD%E8%A8%80%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C语言文件读写</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%8E%E7%BB%84%E5%90%88%E6%95%B0%E6%96%B0%E7%AE%97%E6%B3%95/">打印杨辉三角与组合数新算法</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%AD%E7%BB%84%E5%90%88%E6%95%B0%E5%85%AC%E5%BC%8F%E7%9A%84%E6%80%9D%E8%80%83/" class="archive-article-date">
-  	<time datetime="2020-07-15T02:08:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%AD%E7%BB%84%E5%90%88%E6%95%B0%E5%85%AC%E5%BC%8F%E7%9A%84%E6%80%9D%E8%80%83/">打印杨辉三角中组合数公式的思考</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -302,9 +303,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
