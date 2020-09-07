@@ -152,6 +152,88 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-qsort-与可变参数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/07/qsort-%E4%B8%8E%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/">qsort()与可变参数</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/07/qsort-%E4%B8%8E%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/" class="archive-article-date">
+  	<time datetime="2020-09-07T09:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="qsort-快速排序"><a href="#qsort-快速排序" class="headerlink" title="qsort()快速排序"></a>qsort()快速排序</h4><p>终于发现了C语言的排序库函数 , 终于不用自己手写排序算法了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt; 	//qsort()的原型</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//qsort(void *base , size_t nmemb , size_t size , int (*compar)(const void* , const void*)) </span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">第1个参数指向待排序数组首元素的指针</span></span><br><span class="line"><span class="comment">第2个 参数是待排序数组的数量</span></span><br><span class="line"><span class="comment">第3个参数是每个元素占用的空间大小 </span></span><br><span class="line"><span class="comment">第4个参数是一个函数指针,用于比较元素(参见mycomp的写法) </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mycomp</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *a,<span class="keyword">const</span> <span class="keyword">void</span> *b)</span></span>;	<span class="comment">//注意void *是通用类型指针</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showArray</span><span class="params">(<span class="keyword">int</span> *arr , <span class="keyword">int</span> num)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[]=&#123;<span class="number">34</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">23</span>,<span class="number">575</span>,<span class="number">76</span>,<span class="number">-23</span>,<span class="number">54</span>,<span class="number">-6</span>,<span class="number">34</span>,<span class="number">654</span>,<span class="number">545</span>,<span class="number">3</span>,<span class="number">0</span>,<span class="number">-43</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> len=<span class="keyword">sizeof</span>(a)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	showArray(a,len);</span><br><span class="line">	qsort(a,len,<span class="keyword">sizeof</span>(<span class="keyword">int</span>),mycomp);		<span class="comment">//函数指针作为参数的实际用法</span></span><br><span class="line">	showArray(a,len);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mycomp</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *a , <span class="keyword">const</span> <span class="keyword">void</span> *b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> *a1=(<span class="keyword">const</span> <span class="keyword">int</span> *)a;	<span class="comment">//注意这里的强制类型转换! </span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> *b1=(<span class="keyword">const</span> <span class="keyword">int</span> *)b;</span><br><span class="line">	<span class="keyword">if</span>(*a1&gt;*b1)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(*a1==*b1)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showArray</span><span class="params">(<span class="keyword">int</span> *arr , <span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,*(arr+i));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>正因为<code>compar()</code>使用的是<code>void*</code>通用类型指针 , 所以<code>qsort()</code>不只局限于对基础数据类型进行排序 , 还可以对结构体进行排序</li>
+</ul>
+<h4 id="可变参数-stdarg-h"><a href="#可变参数-stdarg-h" class="headerlink" title="可变参数 : stdarg.h"></a>可变参数 : stdarg.h</h4><p>C可以使用变参函数 , 虽然过程比较复杂 .</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdarg.h&gt; </span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">使用变参函数的 5 个步骤:</span></span><br><span class="line"><span class="comment">1.提供一个使用省略号的函数原型</span></span><br><span class="line"><span class="comment">2.在函数中创建一个 va_list 类型的变量</span></span><br><span class="line"><span class="comment">3.用宏把该变量初始化为一个参数列表</span></span><br><span class="line"><span class="comment">4.用宏访问参数列表 </span></span><br><span class="line"><span class="comment">5.用宏完成清理工作 </span></span><br><span class="line"><span class="comment">*/</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//1.提供函数原型(...必须为最后一个参数,且应还要有一个参数说明参数的数量)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> sum,...)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a=sum(<span class="number">4</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>,a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> sum,...)</span></span>&#123;</span><br><span class="line">	<span class="comment">// 2.创建一个 va_list 类型的变量 </span></span><br><span class="line">	va_list ap;</span><br><span class="line">	<span class="comment">// 3.初始化一个参数列表 </span></span><br><span class="line">	va_start(ap,sum);</span><br><span class="line">	<span class="keyword">int</span> total=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;sum;i++)&#123;</span><br><span class="line">		<span class="comment">// 4.访问参数列表 </span></span><br><span class="line">		total+=va_arg(ap,<span class="keyword">int</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 5.完成清理工作 </span></span><br><span class="line">	va_end(ap);</span><br><span class="line">	<span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C语言</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/07/qsort-%E4%B8%8E%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-饥荒mod制作-添加配方-制作武器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -173,76 +255,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h4 id="利用Lua实现合成坎普斯背包"><a href="#利用Lua实现合成坎普斯背包" class="headerlink" title="利用Lua实现合成坎普斯背包"></a>利用Lua实现合成坎普斯背包</h4><p>首先 , 一个饥荒Mod最少要包含两个部分:<code>modinfo.lua</code>和<code>modmain.lua</code>.其中<code>modinfo.lua</code>是描述mod的信息(mod名称 , 作者 , 版本 , DLC兼容情况 , mod配置选项 , mod图标信息)等 , 而<code>modmain.lua</code>是mod的主体部分 .学习饥荒mod制作可以参考饥荒的源码 ,也可以到创意工坊下载别人的mod学习.</p>
-<h5 id="合成坎普斯背包"><a href="#合成坎普斯背包" class="headerlink" title="合成坎普斯背包"></a>合成坎普斯背包</h5><h6 id="modinfo-lua"><a href="#modinfo-lua" class="headerlink" title="modinfo.lua"></a>modinfo.lua</h6><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">name =<span class="string">"坎普斯背包的合成"</span></span><br><span class="line">author = <span class="string">"heartofocean2"</span></span><br><span class="line">version =<span class="string">"1.0.0"</span></span><br><span class="line"></span><br><span class="line">description = <span class="string">"这是一个提供合成坎普斯背包的mod"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--DLC兼容情况</span></span><br><span class="line">dont_starve_compatible = <span class="literal">true</span></span><br><span class="line">reign_of_giants_compatible = <span class="literal">true</span></span><br><span class="line">dst_compatible = <span class="literal">true</span></span><br><span class="line">shipwrecked_compatible = <span class="literal">true</span></span><br><span class="line">hamlet_compatible = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--Mod配置选项</span></span><br><span class="line">configuration_options = &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        name = <span class="string">"Campsbackpack"</span>,</span><br><span class="line">        label = <span class="string">"坎普斯背包可合成"</span>,</span><br><span class="line">        options =	&#123;</span><br><span class="line">			&#123;description = <span class="string">"开启"</span>, data = <span class="literal">true</span>&#125;,</span><br><span class="line">			&#123;description = <span class="string">"关闭"</span>, data = <span class="literal">false</span>&#125;,</span><br><span class="line">		&#125;,</span><br><span class="line">		default = <span class="literal">true</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">--关闭Mod的图标</span></span><br><span class="line">icon = <span class="string">""</span></span><br><span class="line">icon_atlas = <span class="string">""</span></span><br></pre></td></tr></table></figure>
-
-<h6 id="modmain-lua"><a href="#modmain-lua" class="headerlink" title="modmain.lua"></a>modmain.lua</h6><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">RECIPETABS = GLOBAL.RECIPETABS</span><br><span class="line">Recipe = GLOBAL.Recipe</span><br><span class="line">Ingredient = GLOBAL.Ingredient</span><br><span class="line">TECH = GLOBAL.TECH</span><br><span class="line">STRINGS = GLOBAL.STRINGS</span><br><span class="line"></span><br><span class="line"><span class="comment">--坎普斯背包合成时的介绍(不能过长,否则无法显示)</span></span><br><span class="line">STRINGS.RECIPE_DESC.KRAMPUS_SACK = <span class="string">"坎普斯身上的好东西..."</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--获取Mod配置信息中的'坎普斯背包可合成'</span></span><br><span class="line"><span class="keyword">local</span> MC_KRAMPUS_SACK =  GetModConfigData(<span class="string">"Campsbackpack"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">--如果开启了坎普斯背包合成就添加配方</span></span><br><span class="line"><span class="keyword">if</span> MC_KRAMPUS_SACK <span class="keyword">then</span></span><br><span class="line">	<span class="comment">--徒手制作坎普斯背包(树枝20,草20)</span></span><br><span class="line">	Recipe(<span class="string">"krampus_sack"</span>, &#123;Ingredient(<span class="string">"cutgrass"</span>, <span class="number">20</span>), Ingredient(<span class="string">"twigs"</span>, <span class="number">20</span>)&#125;, RECIPETABS.SURVIVAL, TECH.NONE)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://img-blog.csdnimg.cn/20200818214841559.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1ODMzODY1,size_16,color_FFFFFF,t_70#pic_center" alt="mod界面"></p>
-<p><img src="https://img-blog.csdnimg.cn/20200818215057968.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1ODMzODY1,size_16,color_FFFFFF,t_70#pic_center" alt="mod配置"></p>
-<p><img src="https://img-blog.csdnimg.cn/2020081821513264.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1ODMzODY1,size_16,color_FFFFFF,t_70#pic_center" alt="mod效果"></p>
-<h4 id="实现自制武器"><a href="#实现自制武器" class="headerlink" title="实现自制武器"></a>实现自制武器</h4><p>添加配方肯定不够过瘾 , 创造自己的物品才更有成就感 .因此我打算制作一把来自泰莱瑞亚灾厄mod的武器:雄伟之护.原武器参见:<a href="https://terraria-calamity-mod.fandom.com/zh/wiki/%E9%9B%84%E4%BC%9F%E4%B9%8B%E6%8A%A4" target="_blank" rel="noopener">灾厄wiki:雄伟之护</a> ,从该页面可以得到武器的图片和英文名.</p>
-<p><img src="https://img-blog.csdnimg.cn/20200818220324888.png#pic_center" alt="majestic_guard"></p>
-<h6 id="需要准备的工具"><a href="#需要准备的工具" class="headerlink" title="需要准备的工具"></a>需要准备的工具</h6><ul>
-<li><code>TEXTool</code> : 饥荒的材质都是以.tex结尾的 , 需要使用特定的工具查看</li>
-<li><code>Spriter</code> : 制作饥荒动画(例如拿在手上 , 放在地上的动画)(在64位Windows系统上安装该软件需要同时安装<code>Visual Studio 2013 C++ runtime(VS运行环境)</code>32位和64位两个版本才能正常使用 , 特别坑…)</li>
-<li><code>Don&#39;t Starve Mod Tools</code> : 从steam上下载 , 用于对动画的打包操作</li>
-<li><code>notepad++</code>等编码工具 , 用来编写lua和xml文件</li>
-<li><code>ps</code> : 用来处理图片</li>
-</ul>
-<h6 id="正确的目录结构"><a href="#正确的目录结构" class="headerlink" title="正确的目录结构"></a>正确的目录结构</h6><p>这是所有目前我看到的所有教程都忽略的一点 , 实际上有了正确的目录结构<code>Don&#39;t Starve Mod Tools</code>才能对其正确打包 ,否则会出现贴图无法显示的问题</p>
-<p><img src="https://img-blog.csdnimg.cn/20200818221929542.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1ODMzODY1,size_16,color_FFFFFF,t_70#pic_center" alt="目录结构"></p>
-<p>以下是该武器mod的基本结构</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">│  modicon.tex	(mod的图标)</span><br><span class="line">│  modicon.xml	(mod图标的配置文件)</span><br><span class="line">│  modinfo.lua</span><br><span class="line">│  modmain.lua</span><br><span class="line">│</span><br><span class="line">├─anim			(用来储存武器动画的文件夹)</span><br><span class="line">│      majestic_guard.zip			(武器放在地上的动画)</span><br><span class="line">│      swap_majestic_guard.zip		(武器拿在受伤的动画)</span><br><span class="line">│</span><br><span class="line">├─exported		(用来暂时存放所需素材的地方,打包完成后可以删除.尤其注意该文件夹的结构)</span><br><span class="line">│  ├─majestic_guard				(武器放在地上的素材的文件夹)</span><br><span class="line">│  │  │  majestic_guard.scml	(武器放在地上的动画)</span><br><span class="line">│  │  │  majestic_guard.zip		(打包后形成的压缩包)</span><br><span class="line">│  │  │</span><br><span class="line">│  │  └─majestic_guard			(存放制作动画的素材的文件夹,一定要有)</span><br><span class="line">│  │          majestic_guard.png(武器放到地上的图片)</span><br><span class="line">│  │</span><br><span class="line">│  └─swap_majestic_guard		(武器拿在手上的素材的文件夹)</span><br><span class="line">│      │  swap_majestic_guard.scml		(武器拿在手上的动画)</span><br><span class="line">│      │  swap_majestic_guard.zip		(打包后形成的压缩包)</span><br><span class="line">│      │</span><br><span class="line">│      └─swap_majestic_guard	(存放制作动画的素材的文件夹,一定要有)</span><br><span class="line">│              swap_majestic_guard.png	(武器拿在手上的图片)</span><br><span class="line">│</span><br><span class="line">├─images						(存放图像的目录)</span><br><span class="line">│  └─inventoryimages			(存放物品栏图像的目录)</span><br><span class="line">│          majestic_guard.tex	(武器材质文件)</span><br><span class="line">│          majestic_guard.xml	(武器材质配置文件)</span><br><span class="line">│</span><br><span class="line">└─scripts						(脚本)		</span><br><span class="line">    └─prefabs					(物品代码)</span><br><span class="line">            Majestic_Guard.lua	(武器相关代码)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>可以看出 , 制作一个武器mod大体分为5步</p>
-<ol>
-<li><p>写<code>modinfo.lua</code>中的mod信息 , 并且确定mod的图标</p>
-</li>
-<li><p>利用<code>TEXTool</code>和<code>PS</code>制作: 1.武器在物品栏中的图片 , 并将其转换为.tex格式  2.武器放在地上的图片 , 并利用<code>Spriter</code>制作动画  3.武器拿在手上的图片 , 并利用<code>Spriter</code>制作动画</p>
-</li>
-<li><p>编写<code>modmain.lua</code>和武器代码 , 并完成打包操作</p>
-</li>
-</ol>
-</blockquote>
-<h5 id="简单介绍一下这5步中我遇到的坑"><a href="#简单介绍一下这5步中我遇到的坑" class="headerlink" title="简单介绍一下这5步中我遇到的坑"></a>简单介绍一下这5步中我遇到的坑</h5><h6 id="1"><a href="#1" class="headerlink" title="1"></a>1</h6><ul>
-<li>如果在打开饥荒mod面板的时候还没看到你的mod就发生了闪退 , 就说明是<code>modinfo.lua</code>文件出了问题 , 可能是由于<code>modicon.tex</code>文件不规范引起的</li>
-<li>在制作<code>modicon.tex</code>时会使用到<code>TEXTool</code>中的<code>TEXCreater.exe</code>将.png图片转化为.tex材质文件 ,图中这两个复选按钮一定要打上勾 , 同理 , 在制作物品栏材质文件的时候也要这样</li>
-</ul>
-<p><img src="https://img-blog.csdnimg.cn/20200818230339479.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1ODMzODY1,size_16,color_FFFFFF,t_70#pic_center" alt="制作.tex材质文件"></p>
-<ul>
-<li><p><code>modicon.xml</code>中的代码似乎是固定的</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Atlas</span>&gt;</span><span class="tag">&lt;<span class="name">Texture</span> <span class="attr">filename</span>=<span class="string">"modicon.tex"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Elements</span>&gt;</span><span class="tag">&lt;<span class="name">Element</span> <span class="attr">name</span>=<span class="string">"modicon.tex"</span> <span class="attr">u1</span>=<span class="string">"0"</span> <span class="attr">u2</span>=<span class="string">"1"</span> <span class="attr">v1</span>=<span class="string">"0"</span> <span class="attr">v2</span>=<span class="string">"1"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Elements</span>&gt;</span><span class="tag">&lt;/<span class="name">Atlas</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h5 id="2-1-2-2-2-3"><a href="#2-1-2-2-2-3" class="headerlink" title="2.1  2.2  2.3"></a>2.1  2.2  2.3</h5><ul>
-<li>ps后的成果 ( 背景看起来是黑的 , 但实际上是透明的 ) :</li>
-</ul>
-<p>拿在手上:</p>
-<img src="https://img-blog.csdnimg.cn/20200819141037374.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1ODMzODY1,size_16,color_FFFFFF,t_70#pic_center" alt="拿在手上:" style="zoom: 33%;" />
-
-<p>放在地上:</p>
-<img src="https://img-blog.csdnimg.cn/20200819141054624.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1ODMzODY1,size_16,color_FFFFFF,t_70#pic_center" alt="放在地上:" style="zoom:33%;" />
-
-<p>物品栏:</p>
-<p><img src="https://img-blog.csdnimg.cn/20200818220324888.png#pic_center" alt="物品栏"></p>
-<ul>
-<li><p><code>majestic_guard.xml</code>的写法似乎是固定的 ( 其中u1,u2,v1,v2的含义目前没有搞懂… )</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Atlas</span>&gt;</span><span class="tag">&lt;<span class="name">Texture</span> <span class="attr">filename</span>=<span class="string">"majestic_guard.tex"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Elements</span>&gt;</span><span class="tag">&lt;<span class="name">Element</span> <span class="attr">name</span>=<span class="string">"majestic_guard.tex"</span> <span class="attr">u1</span>=<span class="string">"0.0078125"</span> <span class="attr">u2</span>=<span class="string">"0.9296875"</span> <span class="attr">v1</span>=<span class="string">"0.0703125"</span> <span class="attr">v2</span>=<span class="string">"0.9921875"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Elements</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Atlas</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>怎么制作动画可以参考视屏:<a href="https://www.bilibili.com/video/BV1CJ411D7a8?t=578" target="_blank" rel="noopener">[饥荒-联机] mod制作教程(武器篇)</a></p>
-</li>
-</ul>
-<p><strong>注意 :</strong> 其中拿在手上的动画中动画名必须为BUILD</p>
-<p><img src="https://img-blog.csdnimg.cn/20200819143338131.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1ODMzODY1,size_16,color_FFFFFF,t_70#pic_center" alt="拿在手上的动画"></p>
-<p>同理 , 放在地上的动画名必须为idle</p>
-<p><img src="https://img-blog.csdnimg.cn/20200819143645291.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1ODMzODY1,size_16,color_FFFFFF,t_70#pic_center" alt="放在地上"></p>
-<h5 id="3-modmain-lua-和-majestic-guard-lua-打包"><a href="#3-modmain-lua-和-majestic-guard-lua-打包" class="headerlink" title="3.  modmain.lua 和 majestic_guard.lua ,打包"></a>3.  modmain.lua 和 majestic_guard.lua ,打包</h5><p>这部分可以参考创意工坊中其他的mod.</p>
-<p>打包需要用到<code>autocomplier.exe</code> , 这个软件的原理就是将mod文件夹中的未打包素材打包到anim文件夹下 , 打包完成后就可以玩到自己制作的mod了.</p>
-<p><img src="https://img-blog.csdnimg.cn/20200819144041182.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1ODMzODY1,size_16,color_FFFFFF,t_70#pic_center" alt="autocomplier"></p>
-<p>可参考的文章:<a href="https://wenku.baidu.com/view/e510bd54bb1aa8114431b90d6c85ec3a86c28b4f.html" target="_blank" rel="noopener">教程第二阶段</a></p>
-
+        
+          <a class="article-more-a" href="/2020/08/18/%E9%A5%A5%E8%8D%92mod%E5%88%B6%E4%BD%9C-%E6%B7%BB%E5%8A%A0%E9%85%8D%E6%96%B9-%E5%88%B6%E4%BD%9C%E6%AD%A6%E5%99%A8/#more">more >></a>
+        
       
 
       
@@ -876,89 +891,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%8E%E7%BB%84%E5%90%88%E6%95%B0%E6%96%B0%E7%AE%97%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-打印杨辉三角中组合数公式的思考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%AD%E7%BB%84%E5%90%88%E6%95%B0%E5%85%AC%E5%BC%8F%E7%9A%84%E6%80%9D%E8%80%83/">打印杨辉三角中组合数公式的思考</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%AD%E7%BB%84%E5%90%88%E6%95%B0%E5%85%AC%E5%BC%8F%E7%9A%84%E6%80%9D%E8%80%83/" class="archive-article-date">
-  	<time datetime="2020-07-15T02:08:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在打印杨辉三角中又一种思路就是通过组合数来得出每行的数列</p>
-<h3 id="思路1：直接使用公式"><a href="#思路1：直接使用公式" class="headerlink" title="思路1：直接使用公式"></a>思路1：直接使用公式</h3><div align="center"><img src="https://img-blog.csdnimg.cn/20200724124117438.png" style="zoom: 150%;" /></div>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">C</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> A(m, n) / A(n, n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">A</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> res = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++, m--) &#123;</span><br><span class="line">                res *= m;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>缺点：<code>A(m,n)</code>过大,溢出,根本无法计算像<code>C(30,15)</code>这样的大数</p>
-        
-          <a class="article-more-a" href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%AD%E7%BB%84%E5%90%88%E6%95%B0%E5%85%AC%E5%BC%8F%E7%9A%84%E6%80%9D%E8%80%83/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%AD%E7%BB%84%E5%90%88%E6%95%B0%E5%85%AC%E5%BC%8F%E7%9A%84%E6%80%9D%E8%80%83/">展开全文 >></a>
         </p>
       
 

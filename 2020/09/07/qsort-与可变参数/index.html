@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | ☆海洋の心★のblog</title>
+  <title>qsort()与可变参数 | ☆海洋の心★のblog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="☆海洋の心★のblog">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="qsort()快速排序终于发现了C语言的排序库函数 , 终于不用自己手写排序算法了 12345678910111213141516171819202122232425262728293031323334353637#include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; 	&#x2F;&#x2F;qsort()的原型&#x2F;&#x2F;qsort(void *base , size_t n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="qsort()与可变参数">
+<meta property="og:url" content="http://yoursite.com/2020/09/07/qsort-%E4%B8%8E%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/index.html">
 <meta property="og:site_name" content="☆海洋の心★のblog">
+<meta property="og:description" content="qsort()快速排序终于发现了C语言的排序库函数 , 终于不用自己手写排序算法了 12345678910111213141516171819202122232425262728293031323334353637#include &lt;stdio.h&gt; #include &lt;stdlib.h&gt; 	&#x2F;&#x2F;qsort()的原型&#x2F;&#x2F;qsort(void *base , size_t n">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-07T09:51:28.000Z">
+<meta property="article:modified_time" content="2020-09-07T10:07:40.980Z">
 <meta property="article:author" content="☆海洋の心★">
+<meta property="article:tag" content="C语言">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="☆海洋の心★のblog" type="application/atom+xml">
@@ -150,36 +155,43 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-qsort-与可变参数" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      qsort()与可变参数
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/07/qsort-%E4%B8%8E%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/" class="archive-article-date">
+
+        
+        <a href="/2020/09/07/qsort-%E4%B8%8E%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/" class="archive-article-date">
   	<time datetime="2020-09-07T09:51:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-07</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/07/qsort-%E4%B8%8E%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0/">qsort()与可变参数</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="qsort-快速排序"><a href="#qsort-快速排序" class="headerlink" title="qsort()快速排序"></a>qsort()快速排序</h4><p>终于发现了C语言的排序库函数 , 终于不用自己手写排序算法了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt; 	//qsort()的原型</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//qsort(void *base , size_t nmemb , size_t size , int (*compar)(const void* , const void*)) </span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">第1个参数指向待排序数组首元素的指针</span></span><br><span class="line"><span class="comment">第2个 参数是待排序数组的数量</span></span><br><span class="line"><span class="comment">第3个参数是每个元素占用的空间大小 </span></span><br><span class="line"><span class="comment">第4个参数是一个函数指针,用于比较元素(参见mycomp的写法) </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mycomp</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *a,<span class="keyword">const</span> <span class="keyword">void</span> *b)</span></span>;	<span class="comment">//注意void *是通用类型指针</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showArray</span><span class="params">(<span class="keyword">int</span> *arr , <span class="keyword">int</span> num)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[]=&#123;<span class="number">34</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">23</span>,<span class="number">575</span>,<span class="number">76</span>,<span class="number">-23</span>,<span class="number">54</span>,<span class="number">-6</span>,<span class="number">34</span>,<span class="number">654</span>,<span class="number">545</span>,<span class="number">3</span>,<span class="number">0</span>,<span class="number">-43</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> len=<span class="keyword">sizeof</span>(a)/<span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	showArray(a,len);</span><br><span class="line">	qsort(a,len,<span class="keyword">sizeof</span>(<span class="keyword">int</span>),mycomp);		<span class="comment">//函数指针作为参数的实际用法</span></span><br><span class="line">	showArray(a,len);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mycomp</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *a , <span class="keyword">const</span> <span class="keyword">void</span> *b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> *a1=(<span class="keyword">const</span> <span class="keyword">int</span> *)a;	<span class="comment">//注意这里的强制类型转换! </span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> *b1=(<span class="keyword">const</span> <span class="keyword">int</span> *)b;</span><br><span class="line">	<span class="keyword">if</span>(*a1&gt;*b1)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(*a1==*b1)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showArray</span><span class="params">(<span class="keyword">int</span> *arr , <span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;num;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,*(arr+i));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
+<ul>
+<li>正因为<code>compar()</code>使用的是<code>void*</code>通用类型指针 , 所以<code>qsort()</code>不只局限于对基础数据类型进行排序 , 还可以对结构体进行排序</li>
+</ul>
+<h4 id="可变参数-stdarg-h"><a href="#可变参数-stdarg-h" class="headerlink" title="可变参数 : stdarg.h"></a>可变参数 : stdarg.h</h4><p>C可以使用变参函数 , 虽然过程比较复杂 .</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdarg.h&gt; </span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">使用变参函数的 5 个步骤:</span></span><br><span class="line"><span class="comment">1.提供一个使用省略号的函数原型</span></span><br><span class="line"><span class="comment">2.在函数中创建一个 va_list 类型的变量</span></span><br><span class="line"><span class="comment">3.用宏把该变量初始化为一个参数列表</span></span><br><span class="line"><span class="comment">4.用宏访问参数列表 </span></span><br><span class="line"><span class="comment">5.用宏完成清理工作 </span></span><br><span class="line"><span class="comment">*/</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//1.提供函数原型(...必须为最后一个参数,且应还要有一个参数说明参数的数量)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> sum,...)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a=sum(<span class="number">4</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>,a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> sum,...)</span></span>&#123;</span><br><span class="line">	<span class="comment">// 2.创建一个 va_list 类型的变量 </span></span><br><span class="line">	va_list ap;</span><br><span class="line">	<span class="comment">// 3.初始化一个参数列表 </span></span><br><span class="line">	va_start(ap,sum);</span><br><span class="line">	<span class="keyword">int</span> total=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;sum;i++)&#123;</span><br><span class="line">		<span class="comment">// 4.访问参数列表 </span></span><br><span class="line">		total+=va_arg(ap,<span class="keyword">int</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 5.完成清理工作 </span></span><br><span class="line">	va_end(ap);</span><br><span class="line">	<span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,364 +203,54 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/08/18/%E9%A5%A5%E8%8D%92mod%E5%88%B6%E4%BD%9C-%E6%B7%BB%E5%8A%A0%E9%85%8D%E6%96%B9-%E5%88%B6%E4%BD%9C%E6%AD%A6%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-08-18T12:59:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-18</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/18/%E9%A5%A5%E8%8D%92mod%E5%88%B6%E4%BD%9C-%E6%B7%BB%E5%8A%A0%E9%85%8D%E6%96%B9-%E5%88%B6%E4%BD%9C%E6%AD%A6%E5%99%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">饥荒mod制作(添加配方,制作武器)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/08/18/%E9%A5%A5%E8%8D%92mod%E5%88%B6%E4%BD%9C-%E6%B7%BB%E5%8A%A0%E9%85%8D%E6%96%B9-%E5%88%B6%E4%BD%9C%E6%AD%A6%E5%99%A8/">饥荒mod制作(添加配方,制作武器)</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">小技术</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/08/05/%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E4%B8%8E%E5%BF%AB%E6%8E%92/" class="archive-article-date">
-  	<time datetime="2020-08-05T08:14:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/08/05/%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E4%B8%8E%E5%BF%AB%E6%8E%92/">希尔排序与快排</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/31/C%E8%AF%AD%E8%A8%80%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/" class="archive-article-date">
-  	<time datetime="2020-07-31T07:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/31/C%E8%AF%AD%E8%A8%80%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/">C语言文件读写</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/29/C%E7%BB%93%E6%9E%84%E4%BD%93/" class="archive-article-date">
-  	<time datetime="2020-07-29T14:16:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/29/C%E7%BB%93%E6%9E%84%E4%BD%93/">C结构体</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/26/C%E8%AF%AD%E8%A8%80String%E9%83%A8%E5%88%86%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="archive-article-date">
-  	<time datetime="2020-07-26T08:01:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/26/C%E8%AF%AD%E8%A8%80String%E9%83%A8%E5%88%86%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0/">C语言String部分函数的实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/25/C%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/" class="archive-article-date">
-  	<time datetime="2020-07-25T12:02:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/25/C%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/">C函数指针</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/22/Word%E7%A7%8B%E5%8F%B6%E6%95%99%E7%A8%8B%E6%80%BB%E7%BB%93-%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/" class="archive-article-date">
-  	<time datetime="2020-07-22T12:46:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/22/Word%E7%A7%8B%E5%8F%B6%E6%95%99%E7%A8%8B%E6%80%BB%E7%BB%93-%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/">Word秋叶教程总结(思维导图)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">office_Word</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/16/Word%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" class="archive-article-date">
-  	<time datetime="2020-07-16T10:25:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/16/Word%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/">Word技巧总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">office_Word</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%8E%E7%BB%84%E5%90%88%E6%95%B0%E6%96%B0%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-07-15T03:44:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/15/%E6%89%93%E5%8D%B0%E6%9D%A8%E8%BE%89%E4%B8%89%E8%A7%92%E4%B8%8E%E7%BB%84%E5%90%88%E6%95%B0%E6%96%B0%E7%AE%97%E6%B3%95/">打印杨辉三角与组合数新算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -572,8 +274,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
