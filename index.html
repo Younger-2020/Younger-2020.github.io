@@ -152,6 +152,91 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-C++继承" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/22/C++%E7%BB%A7%E6%89%BF/">C++继承</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/22/C++%E7%BB%A7%E6%89%BF/" class="archive-article-date">
+  	<time datetime="2020-10-22T14:29:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+
+<p><img src="https://img-blog.csdnimg.cn/20201023214458162.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1ODMzODY1,size_16,color_FFFFFF,t_70#pic_center" alt="c++继承"></p>
+<h4 id="子类的构造函数"><a href="#子类的构造函数" class="headerlink" title="子类的构造函数"></a>子类的构造函数</h4><p>与java继承类似,子类对象的构造需要父类的构造函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">person</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">    person(<span class="built_in">string</span> name,<span class="keyword">int</span> age):name(name),age(age)&#123;&#125;;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"姓名"</span>&lt;&lt;name&lt;&lt;<span class="string">","</span>&lt;&lt;age&lt;&lt;<span class="string">"年龄"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">student</span>:</span><span class="keyword">public</span> person&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">float</span> score;</span><br><span class="line">    <span class="comment">//子类的构造必须借助父类的构造函数完成</span></span><br><span class="line">    student(<span class="built_in">string</span> name,<span class="keyword">int</span> age,<span class="keyword">int</span> id,<span class="keyword">float</span> score):person(name,age)&#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;id=id;</span><br><span class="line">        <span class="keyword">this</span>-&gt;score=score;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"姓名 "</span>&lt;&lt;name&lt;&lt;<span class="string">","</span>&lt;&lt;<span class="string">"年龄:"</span>&lt;&lt;age&lt;&lt;<span class="built_in">endl</span>&lt;&lt;<span class="string">"学号："</span>&lt;&lt;id&lt;&lt;<span class="string">"分数"</span>&lt;&lt;score;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    student s=student(<span class="string">"李四"</span>,<span class="number">22</span>,<span class="number">20190000</span>,<span class="number">99.7</span>);</span><br><span class="line">    s.show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="虚继承的引入"><a href="#虚继承的引入" class="headerlink" title="虚继承的引入"></a>虚继承的引入</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">animal</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sheep</span>:</span><span class="keyword">public</span> animal&#123;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tuo</span>:</span><span class="keyword">public</span> animal&#123;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SheepTuo</span>:</span><span class="keyword">public</span> Sheep,<span class="keyword">public</span> Tuo&#123;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    SheepTuo t=SheepTuo();</span><br><span class="line">    t.age=<span class="number">10</span>;<span class="comment">//该行会报错,需要改成 t.Sheep::age=10;t.Tuo::age=10;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用虚继承就可以避免这种现象发生</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">animal</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sheep</span>:</span><span class="keyword">virtual</span> <span class="keyword">public</span> animal&#123;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tuo</span>:</span><span class="keyword">virtual</span> <span class="keyword">public</span> animal&#123;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SheepTuo</span>:</span><span class="keyword">public</span> Sheep,<span class="keyword">public</span> Tuo&#123;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    SheepTuo t=SheepTuo();</span><br><span class="line">    <span class="comment">//现在t中的age数据就只有一份了</span></span><br><span class="line">    t.age=<span class="number">10</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"t的age属性:"</span>&lt;&lt;t.age&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>虚继承的底层实现可以参考:<a href="https://blog.csdn.net/bxw1992/article/details/77726390" target="_blank" rel="noopener">C++中虚继承的作用及底层实现原理</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/22/C++%E7%BB%A7%E6%89%BF/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-C++友元与运算符重载" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -815,82 +900,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/07/25/C%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Word秋叶教程总结-思维导图" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/22/Word%E7%A7%8B%E5%8F%B6%E6%95%99%E7%A8%8B%E6%80%BB%E7%BB%93-%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/">Word秋叶教程总结(思维导图)</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/22/Word%E7%A7%8B%E5%8F%B6%E6%95%99%E7%A8%8B%E6%80%BB%E7%BB%93-%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/" class="archive-article-date">
-  	<time datetime="2020-07-22T12:46:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>照片↓</p>
-        
-          <a class="article-more-a" href="/2020/07/22/Word%E7%A7%8B%E5%8F%B6%E6%95%99%E7%A8%8B%E6%80%BB%E7%BB%93-%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">office_Word</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/22/Word%E7%A7%8B%E5%8F%B6%E6%95%99%E7%A8%8B%E6%80%BB%E7%BB%93-%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/">展开全文 >></a>
         </p>
       
 
